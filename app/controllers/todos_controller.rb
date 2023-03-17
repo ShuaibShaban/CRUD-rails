@@ -25,6 +25,13 @@ class TodosController < ApplicationController
 
     #TODO: Add delete method
 
+    def delete
+        id = params[:id]
+        todo = Todo.find(id)
+        todo.destroy
+        render json: {message: "Deleted Todo successfully"}
+    end
+
     private
 
     def todo_params
