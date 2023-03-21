@@ -1,8 +1,13 @@
 class TodosController < ApplicationController
 
+
     def get_todos
         Todo.all
+        email = session[:email]
+        if email
         render json: Todo.all
+        else
+            render json: { message: "Not authorized" }, status: :authorized
     end
 
     def create
@@ -11,7 +16,16 @@ class TodosController < ApplicationController
         # priority = todo_params[:priority]
 
         #add toso in db
+
+        user = cookies[:email]
+
+        if user
+
         todo = Todo.create(todo_params)
+        # if todo.valid?
+        #     render json: todo,serializer : TodoSerializer
+        # else
+        #     render json: todo.errors
 
         render json: todo
     end
